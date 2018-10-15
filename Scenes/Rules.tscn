@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://DefaultDynamicFont.tres" type="DynamicFont" id=1]
+
+[node name="Rules" type="Node2D"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 356.0
+margin_bottom = 638.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = false
+bbcode_text = "Each player is assigned a job and a location.
+Everybody has the same location, exept the infiltrator, he does not know the location.
+The youngest player starts by asking the first question, all questions must be either a multiple choice or yes or no.
+No player can ask if the other is the infiltrator. Questions should usually be about the location or job.
+Once a player has answered a question, he can then ask a question to any other player.
+Anybody who is not the infiltrator can at any moment accuse a player of being a spy, at wich point two things can happen:
+1: If the player is right, and the accused player is indeed infiltrator, the infiltrator looses.
+2: If the accused player is not infiltrator, the infiltrator wins (and all other players loose)
+Finally, there is a timer through wich the infiltrator may win. Once the timer runs out,
+if the infiltrator was not discovered by any other players, then the infiltrator wins."
+visible_characters = -1
+percent_visible = 1.0
+meta_underlined = true
+tab_size = 4
+text = "Each player is assigned a job and a location.
+Everybody has the same location, exept the infiltrator, he does not know the location.
+The youngest player starts by asking the first question, all questions must be either a multiple choice or yes or no.
+No player can ask if the other is the infiltrator. Questions should usually be about the location or job.
+Once a player has answered a question, he can then ask a question to any other player.
+Anybody who is not the infiltrator can at any moment accuse a player of being a spy, at wich point two things can happen:
+1: If the player is right, and the accused player is indeed infiltrator, the infiltrator looses.
+2: If the accused player is not infiltrator, the infiltrator wins (and all other players loose)
+Finally, there is a timer through wich the infiltrator may win. Once the timer runs out,
+if the infiltrator was not discovered by any other players, then the infiltrator wins."
+scroll_active = true
+scroll_following = false
+selection_enabled = false
+override_selected_font_color = false
+_sections_unfolded = [ "BBCode" ]
+
+
