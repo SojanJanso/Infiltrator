@@ -6,11 +6,10 @@ var ip = "127.0.0.1"
 var port = 2424
 var maxPlayers = 12
 
-var playerName = ""
+var playerName = "" #name of this machines player
 
-var playersId = []
+
 var playersDic = {}
-var playersArray = []
+#dictionary {id = refferenceArray, id2 = refferenceArray}
 
-func ready():
-	pass
+var numOfPlayersConnected = 1 #quick "not alone" check

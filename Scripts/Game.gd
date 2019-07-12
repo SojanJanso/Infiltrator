@@ -1,45 +1,55 @@
 extends Node2D
 
-var playerName
 var locationIndex
 
 var playerArray = []
-var infiltrator #infiltrator player in id value
+var infiltrator #id of infiltrator
 var Location
 
-var timer = 0
+var launching = true
+
+var playersConected = 0
 
 
 func _ready():
 	var randNum = 0
 	var arraySize
 	
-	randomize()
+	randomize() #makes the random number actualy random (latter)
 	
 	$Name.set_text(Globals.playerName)
 	
+	#remove underscores on location names in GUI (does not modify the locations array)
 	for Locations in Arrays.locations:
-		$LocationList.add_item(str(Locations), null, true)
+		var placeHolderString = ""
+		placeHolderString = Locations.replace("_", " ")
+		$LabelLocationsList.add_text(placeHolderString + "\n")
 	
 	if is_network_master():
 		$Restart.show() #show restart button
+		$Lobby.show()
+	else:
+		$Restart.hide()
+		$Lobby.hide()
 
 func _process(delta):
-	if timer == 0:
-		$TimerLabel.set_text("")
+	if launching:
+		$TimerLabel.set_text("") #clear previous text
 		$TimerLabel.set_text(str("starting in: "+str(round($TimerLabel/Timer.get_time_left())) + " seconds"))
 	else:
-		$TimerLabel.set_text("")
+		$TimerLabel.set_text("") #clear previous text
 		$TimerLabel.set_text(str(str(round($TimerLabel/EndTimer.get_time_left())) + " seconds left"))
 
-
 sync func set_location(Location):
-	$Location.set_text(Location)
+	var bufferLocation
+	bufferLocation = Location.replace("_", " ")
+	$Location.set_text(bufferLocation)
 
 remote func set_job(Job):
 	$Job.set_text(str(Job))
 
 remote func set_infiltrator():
+	$Location.set_text("Find our location!")
 	$Job.set_text("Infiltrator")
 	$Job.set_self_modulate(Color(250,0,0))
 
@@ -47,6 +57,7 @@ func _on_Restart_pressed():
 	rpc("restart_game")
 
 sync func restart_game():
+	print(Globals.playersDic)
 	get_tree().change_scene("res://Scenes/Game.tscn")
 
 func _on_EndTimer_timeout():
@@ -94,10 +105,17 @@ func _on_Timer_timeout():
 		infiltrator = playerArray[randNum]
 		
 		if infiltrator == 1:
+			$Location.set_text("Find our location!")
 			$Job.set_text("Infiltrator")
 			$Job.set_self_modulate(Color(250,0,0))
 		else:
 			rpc_id(infiltrator, "set_infiltrator")
 	
 	$TimerLabel/EndTimer.start()
-	timer = 1
+	launching = false
+
+func _on_Lobby_pressed():
+	rpc("return_to_lobby")
+
+remotesync func return_to_lobby():
+	get_tree().change_scene("res://Scenes/Lobby.tscn")
